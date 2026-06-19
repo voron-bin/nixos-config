@@ -13,7 +13,7 @@
   # Hibernation resume device
   # IMPORTANT: After installation, verify the correct device with 'lsblk -f'
   # and update this path if needed. Using label is safer than raw device paths.
-  boot.resumeDevice = "/dev/disk/by-label/nixos";
+  # boot.resumeDevice = "/dev/nvme0n1/etc/nixos";
 
   # Swap device declaration (disko creates the file, this tells the kernel to use it)
   swapDevices = [

@@ -13,37 +13,37 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/mapper/crypted";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
+#  fileSystems."/" =
+#    { device = "/dev/mapper/crypted";
+#      fsType = "btrfs";
+#      options = [ "subvol=root" ];
+#    };
 
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/bfcd46b5-7d19-4f58-a0ac-bc7b1e879332";
+#  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/b49a5add-85ff-43b2-8ce1-c3562ac5ce78";
 
-  fileSystems."/.swapvol" =
-    { device = "/dev/mapper/crypted";
-      fsType = "btrfs";
-      options = [ "subvol=swap" ];
-    };
+#  fileSystems."/.swapvol" =
+#    { device = "/dev/mapper/crypted";
+#      fsType = "btrfs";
+#      options = [ "subvol=swap" ];
+#    };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/E3F3-0B21";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+#  fileSystems."/boot" =
+#    { device = "/dev/disk/by-uuid/286E-D2DA";
+#      fsType = "vfat";
+#      options = [ "fmask=0077" "dmask=0077" ];
+#    };
 
-  fileSystems."/home" =
-    { device = "/dev/mapper/crypted";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
+#  fileSystems."/home" =
+#    { device = "/dev/mapper/crypted";
+#      fsType = "btrfs";
+#      options = [ "subvol=home" ];
+#    };
 
-  fileSystems."/nix" =
-    { device = "/dev/mapper/crypted";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
-    };
+#  fileSystems."/nix" =
+#    { device = "/dev/mapper/crypted";
+#      fsType = "btrfs";
+#      options = [ "subvol=nix" ];
+#    };
 
   swapDevices = [ ];
 
