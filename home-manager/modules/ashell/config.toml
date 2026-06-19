@@ -11,7 +11,7 @@ left = [
 center = ["MediaPlayer"]
 right = [
 	["RuCpu", "RuRam", "RuTemp", "RuGpu"],
-	["RuUpdates", "RuVpn", "Privacy"],
+	["RuVpn", "Privacy"],
 	["RuClock", "Settings"]
 ]
 

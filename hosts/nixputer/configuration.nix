@@ -17,4 +17,5 @@
 	system.stateVersion = stateVersion;
 
 	nixpkgs.config.allowUnfree = true;
+
 }

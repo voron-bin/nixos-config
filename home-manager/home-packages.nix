@@ -39,7 +39,6 @@
 		inkscape
 		librecad
 		nextcloud-client
-		mullvad-vpn           # Use 'mullvad-vpn' (removed '-bin')
 
 		# ============================================================
 		# MEDIA & AUDIO/VIDEO
@@ -61,19 +60,7 @@
 		rsync
 		stress
 		git                   # Version control
-		python3               # Python interpreter (includes pip)
-
-		# ============================================================
-		# FONTS & THEMES
-		# ============================================================
-		font-awesome          # Check 'otf-font-awesome' or 'ttf-font-awesome'
-		terminus_font
-		nerd-fonts.jetbrains-mono  # Nerdfont version of JetBrains Mono
-		ubuntu-sans
-		nerd-fonts.ubuntu
-		ultimate-oldschool-pc-font-pack
-		papirus-icon-theme
-		papirus-folders
+		python3               # Python interpreter (includes pip)	
 
 		# ============================================================
 		# NETWORKING & SECURITY
