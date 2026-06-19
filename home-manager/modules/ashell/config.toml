@@ -1,0 +1,109 @@
+log_level = "warn"
+outputs = "Active"
+position = "Top"
+app_launcher_cmd = "rofi -show drun"
+
+[modules]
+left = [
+	["AppLauncher", "Workspaces"],
+	"WindowTitle"
+]
+center = ["MediaPlayer"]
+right = [
+	["RuCpu", "RuRam", "RuTemp", "RuGpu"],
+	["RuUpdates", "RuVpn", "Privacy"],
+	["RuClock", "Settings"]
+]
+
+[[CustomModule]]
+name = "RuUpdates"
+type = "Button"
+command = 'kitty -e bash -c "yay; touch /tmp/ashell-updates-trigger; echo Готово - Нажмите Enter для выхода; read" &'
+listen_cmd = '''sh -c 'touch /tmp/ashell-updates-trigger; while true; do count=$(( $(checkupdates 2>/dev/null | wc -l) + $(yay -Qua 2>/dev/null | wc -l) )); if [ "$count" -gt 0 ]; then echo "{\"text\": \"ОБН $count\", \"alt\": \"pending\"}"; else echo "{\"text\": \"\", \"alt\": \"current\"}"; fi; inotifywait -q -t 1800 -e modify /tmp/ashell-updates-trigger >/dev/null 2>&1; done' '''
+alert = "pending"
+
+[window_title]
+truncate_title_after_length = 80
+
+[[CustomModule]]
+name = "AppLauncher"
+icon = ""
+command = "rofi -show drun"
+
+[[CustomModule]]
+name = "RuClock"
+type = "Text"
+listen_cmd = '''sh -c 'while true; do echo "{\"text\": \"$(LC_TIME=ru_RU.UTF-8 date +"%a %d %b · %H:%M")\", \"alt\": \"\"}"; sleep 30; done' '''
+
+[[CustomModule]]
+name = "RuCpu"
+type = "Text"
+listen_cmd = '''sh -c 'while true; do cpu=$(top -bn1 | grep "Cpu(s)" | awk "{print 100-\$8}" | cut -d. -f1); echo "{\"text\": \"ЦП $cpu%\", \"alt\": \"\"}"; sleep 2; done' '''
+
+[[CustomModule]]
+name = "RuRam"
+type = "Text"
+listen_cmd = '''sh -c 'while true; do mem=$(free -m | awk "/Mem:/ {printf \"%d/%d\", \$3/1024, \$2/1024}"); echo "{\"text\": \"ОЗУ ${mem}ГБ\", \"alt\": \"\"}"; sleep 5; done' '''
+
+[[CustomModule]]
+name = "RuTemp"
+type = "Text"
+listen_cmd = '''sh -c 'while true; do temp=$(sensors k10temp-pci-* | grep "Tctl" | awk "{print \$2}" | tr -d "+°C" | cut -d. -f1); echo "{\"text\": \"ТЕМП ${temp}°\", \"alt\": \"\"}"; sleep 3; done' '''
+
+[[CustomModule]]
+name = "RuGpu"
+type = "Text"
+listen_cmd = '''sh -c 'while true; do temp=$(sensors amdgpu-pci-* | grep "edge" | awk "{print \$2}" | tr -d "+°C" | cut -d. -f1); echo "{\"text\": \"ГП ${temp}°\", \"alt\": \"\"}"; sleep 3; done' '''
+
+[workspaces]
+visibility_mode = "All"
+enable_workspace_filling = true
+max_workspaces = 10
+workspace_names = ["А", "Б", "В", "Г", "Д", "Е", "Ж", "З", "И", "К"]
+
+[settings]
+lock_cmd = "hyprlock &"
+indicators = ["IdleInhibitor", "Audio", "Microphone", "Network"]
+
+[[CustomModule]]
+name = "RuVpn"
+type = "Text"
+listen_cmd = '''sh -c 'while true; do if nmcli -t -f TYPE,STATE connection show --active 2>/dev/null | grep -E "^(vpn|wireguard|tun|tap):activated" | grep -q .; then echo "{\"text\": \"ВПН\", \"alt\": \"on\"}"; else echo "{\"text\": \"\", \"alt\": \"off\"}"; fi; sleep 5; done' '''
+
+[appearance]
+font_name = "PxPlus IBM VGA 8x14"
+scale_factor = 1.5
+style = "Solid"
+opacity = 1.0
+
+[appearance.background_color]
+base = "#1C1917" # bar surface at rest
+strong = "#2F2B27" # raised surfaces, menu panels
+weak = "#141210" # recessed areas, subtle dividers
+text = "#D6CFC2" # warm bone, matches global text
+
+[appearance.primary_color]
+base = "#A84826" # rust, main accent
+strong = "#C25530" # brighter rust for hover/ active
+weak = "#7A2E1F" # brick, for pressed/ inactive states
+text = "#D6CFC2" # text sitting on rust reads as warm bone
+
+[appearance.danger_color]
+base = "#C8302E"
+weak = "#B89650"   # warnings in ochre instead of pink-red auto-generation
+text = "#D6CFC2"
+
+[appearance.secondary_color]
+base = "#3D3833"    # border_muted — used for borders, slider tracks
+strong = "#4D4843"  # slightly lifted for hover on borders
+weak = "#2F2B27"    # recedes into surface_raised
+text = "#D6CFC2"
+
+[appearance.success_color]
+base = "#7A8066"    # muted olive green, fits the aesthetic
+strong = "#8F9579"
+weak = "#5F6451"
+text = "#D6CFC2"
+
+# other colors not in specific categories
+text_color = "#D6CFC2"

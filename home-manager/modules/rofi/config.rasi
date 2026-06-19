@@ -1,0 +1,164 @@
+* {
+    font:                        "PxPlus IBM VGA 8x14 16";
+
+    /* Voronezh palette */
+    base-dark:                   #1C1917;
+    surface:                     #262320;
+    surface-raised:              #2F2B27;
+    border-muted:                #3D3833;
+    text-primary:                #D6CFC2;
+    text-muted:                  #7A7568;
+    rust:                        #A84826;
+    brick:                       #7A2E1F;
+    ochre:                       #B89650;
+    warning-red:                 #C8302E;
+
+    /* Role mappings */
+    selected-normal-foreground:  @text-primary;
+    foreground:                  @text-primary;
+    normal-foreground:           @text-primary;
+    alternate-normal-background: rgba ( 0, 0, 0, 0 % );
+    selected-urgent-foreground:  @warning-red;
+    urgent-foreground:           @warning-red;
+    alternate-urgent-background: rgba ( 0, 0, 0, 0 % );
+    active-foreground:           @ochre;
+    lightbg:                     @surface-raised;
+    selected-active-foreground:  @ochre;
+    alternate-active-background: rgba ( 0, 0, 0, 0 % );
+    background:                  @base-dark;
+    bordercolor:                 @rust;
+    alternate-normal-foreground: @text-primary;
+    normal-background:           rgba ( 0, 0, 0, 0 % );
+    lightfg:                     @base-dark;
+    selected-normal-background:  @surface-raised;
+    border-color:                @rust;
+    spacing:                     8;
+    separatorcolor:              @border-muted;
+    urgent-background:           @base-dark;
+    selected-urgent-background:  @surface-raised;
+    alternate-urgent-foreground: @warning-red;
+    background-color:            rgba ( 0, 0, 0, 0 % );
+    alternate-active-foreground: @active-foreground;
+    active-background:           rgba ( 0, 0, 0, 0 % );
+    selected-active-background:  @surface-raised;
+}
+window {
+    background-color: @background;
+    border:           1;
+    border-color:     @rust;
+    border-radius:    0px;
+    padding:          2;
+}
+mainbox {
+    border:  0;
+    padding: 0;
+}
+message {
+    border:       1px 0px 0px ;
+    border-color: @separatorcolor;
+    padding:      1px ;
+}
+textbox {
+    text-color: @foreground;
+}
+listview {
+    fixed-height: 0;
+    border:       1px 0px 0px ;
+    border-color: @separatorcolor;
+    spacing:      2px ;
+    scrollbar:    false;
+    padding:      2px 0px 0px ;
+}
+element {
+    border:       0px 0px 0px 3px ;
+    border-color: transparent;
+    padding:      2px 6px ;
+}
+element-text {
+    background-color: inherit;
+    text-color:       inherit;
+}
+element.normal.normal {
+    background-color: @normal-background;
+    text-color:       @normal-foreground;
+}
+element.normal.urgent {
+    background-color: @urgent-background;
+    text-color:       @urgent-foreground;
+}
+element.normal.active {
+    background-color: @active-background;
+    text-color:       @active-foreground;
+}
+element.selected.normal {
+    background-color: @selected-normal-background;
+    text-color:       @selected-normal-foreground;
+    border-color:     @rust;
+}
+element.selected.urgent {
+    background-color: @selected-urgent-background;
+    text-color:       @selected-urgent-foreground;
+    border-color:     @warning-red;
+}
+element.selected.active {
+    background-color: @selected-active-background;
+    text-color:       @selected-active-foreground;
+    border-color:     @ochre;
+}
+element.alternate.normal {
+    background-color: @alternate-normal-background;
+    text-color:       @alternate-normal-foreground;
+}
+element.alternate.urgent {
+    background-color: @alternate-urgent-background;
+    text-color:       @alternate-urgent-foreground;
+}
+element.alternate.active {
+    background-color: @alternate-active-background;
+    text-color:       @alternate-active-foreground;
+}
+scrollbar {
+    width:        4px ;
+    border:       0;
+    handle-width: 8px ;
+    handle-color: @rust;
+    padding:      0;
+}
+mode-switcher {
+    border:       1px 0px 0px ;
+    border-color: @separatorcolor;
+}
+button {
+    text-color:       @text-muted;
+    padding:          4px 8px ;
+}
+button.selected {
+    background-color: @selected-normal-background;
+    text-color:       @text-primary;
+    border:           0px 0px 2px 0px ;
+    border-color:     @rust;
+}
+inputbar {
+    spacing:    0;
+    text-color: @normal-foreground;
+    padding:    4px 6px ;
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+}
+case-indicator {
+    spacing:    0;
+    text-color: @text-muted;
+}
+entry {
+    spacing:    0;
+    text-color: @normal-foreground;
+}
+prompt {
+    spacing:    0;
+    text-color: @rust;
+}
+textbox-prompt-colon {
+    expand:     false;
+    str:        " ►";
+    margin:     0px 0.5em 0em 0em ;
+    text-color: @rust;
+}
