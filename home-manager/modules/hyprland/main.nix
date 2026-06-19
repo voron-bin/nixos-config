@@ -2,6 +2,8 @@
 	wayland.windowManager.hyprland = {
 		enable = true;
 		systemd.enable = true;
+		# stating the old .conf style of config file for compat
+		configType = "hyprlang";
 		settings = {
 			env = [
         			# env variable for apps launched while using hyprland
@@ -19,7 +21,7 @@
 			"$terminal" = "kitty";
 			"$fileManager" = "$terminal -e sh -c 'ranger'";
 			"$menu" = "rofi -show drun";
-			"$browser" = "librewolf";
+			"$browser" = "mullvad-browser";
 
 			exec-once = [
 			# may not need this in actuality, but will want to consider getting this fixed in case I need it in the future
@@ -30,7 +32,7 @@
 			
 			# running a short script to find a random wallpaper
 			# may not work under the nix directory structure
-			"sleep 1 && awww img "$(find ~/Wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n 1)" --transition-type none"
+			"sleep 1 && awww img '$(find ~/Wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n 1)' --transition-type none"
 
 			"[workspace special:ВСП silent] mullvad-vpn"
 			"[workspace 1 silent] $terminal"
@@ -44,8 +46,8 @@
 
 			general = {
 				border_size = 1;
-				col.active_border = "rgb(A84826)";
-				col.inactive_border = "rgb(3D3833)";
+				"col.active_border" = "rgb(A84826)";
+				"col.inactive_border" = "rgb(3D3833)";
 				gaps_in = 4;
 				gaps_out = 8;
 
@@ -72,9 +74,11 @@
 			animations = {
 				enabled = true;
 				bezier = "linear, 0.0, 0.0, 1.0, 1.0";
-				animation = "windows, 1, 3, linear";
-				animation = "fade, 1, 4, linear";
-				animation = "workspace, 1, 3, linear";
+				animation = [
+					"windows, 1, 3, linear"
+					"fade, 1, 4, linear"
+					"workspaces, 1, 3, linear"
+				];
 			};
 
 			dwindle = {

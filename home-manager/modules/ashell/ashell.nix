@@ -2,7 +2,7 @@
 
 {
 	# symlink to the config file
-	xdg.configfile."ashell/config.toml".source = ./config.toml;
+	xdg.configFile."ashell/config.toml".source = ./config.toml;
 
 	home.packages = with pkgs; [
 		# declaring packages that are needed for ashell

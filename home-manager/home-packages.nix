@@ -27,7 +27,7 @@
 		# ============================================================
 		# BROWSERS & WEB APPLICATIONS
 		# ============================================================
-		librewolf             # Use 'librewolf' (removed '-bin')
+		mullvad-browser
 		freetube
 		
 		# ============================================================
@@ -35,8 +35,7 @@
 		# ============================================================
 		steam
 		prismlauncher         # Verified: exists in nixpkgs
-		lib32-vulkan-radeon   # Essential for Proton/Gaming on AMD
-
+		
 		# ============================================================
 		# OFFICE & PRODUCTIVITY
 		# ============================================================
@@ -72,12 +71,12 @@
 		# ============================================================
 		# FONTS & THEMES
 		# ============================================================
-		noto-fonts-cjk
 		font-awesome          # Check 'otf-font-awesome' or 'ttf-font-awesome'
-		terminus-font         # TTY font
-		jetbrains-mono-nerd-fonts  # Nerdfont version of JetBrains Mono
-		ubuntu-font-family
-		ultimate-oldschool-pc-fonts-pack
+		terminus_font
+		nerd-fonts.jetbrains-mono  # Nerdfont version of JetBrains Mono
+		ubuntu-sans
+		nerd-fonts.ubuntu
+		ultimate-oldschool-pc-font-pack
 		papirus-icon-theme
 		papirus-folders
 
@@ -85,10 +84,7 @@
 		# NETWORKING & SECURITY
 		# ============================================================
 		networkmanager
-		nm-connection-editor
 		fwupd
-		nss-mdns
-		ufw                   # Firewall (ensure systemd integration is enabled)
 		nmap
 
 		# ============================================================
@@ -96,7 +92,7 @@
 		# ============================================================
 		android-tools         # ADB/Fastboot
 		brightnessctl
-		rocm-smi-lib          # AMD GPU monitoring
+		rocmPackages.rocm-smi          # AMD GPU monitoring
 		solaar
 		smartmontools
 		xf86-video-amdgpu     # Often optional on Wayland but good to have
@@ -105,7 +101,7 @@
 		# PRINTING
 		# ============================================================
 		cups
-		cups-pdf
+		cups-pdf-to-pdf
 		gutenprint
 		
 		# ============================================================
@@ -116,8 +112,8 @@
 		p7zip                 # Nix package name for 7zip
 		unzip
 		zip
-		ntfs-3g
-		exfat-utils           # Or 'exfatprogs' if available in nixpkgs
+		ntfs3g
+		exfatprogs
 
 		# ============================================================
 		# SESSION & UI
@@ -130,12 +126,12 @@
 		# PDF & DOCUMENTS
 		# ============================================================
 		zathura
-		zathura-pdf-mupdf
+		zathuraPkgs.zathura_pdf_mupdf
 
 		# ============================================================
 		# MISC / DEVELOPMENT
 		# ============================================================
-		texlive-complex       # Full TeX Live suite (replaces multiple texlive-* packages)
+		texliveFull		# Full TeX Live suite (replaces multiple texlive-* packages)
 		# java21-openjfx        # Java with FX
 		# jdk17                 # Eclipse Temurin JDK 17
 		# jdk21                 # OpenJDK 21
