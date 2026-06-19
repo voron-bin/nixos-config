@@ -4,6 +4,6 @@
   programs.rofi = {
     enable = true;
     package = pkgs.rofi;
-    theme = ./config.rasi;
+    theme = ./voronezh.rasi;
   };
 }
