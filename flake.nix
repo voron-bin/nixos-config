@@ -50,6 +50,8 @@
 
 				modules = [
 					./hosts/${host.hostname}/configuration.nix
+					./hosts/${host.hostname}/desktop-disko.nix
+					inputs.disko.nixosModules.disko
 				];
 			};
 
