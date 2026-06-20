@@ -33,8 +33,8 @@
 
     initExtra = ''
       # Start Tmux automatically if not already running. No Tmux in TTY
-      if [ -z "$TMUX" ] && [ -n "$DISPLAY" ]; then
-        tmux attach-session -t default || tmux new-session -s default
+      if [ -z "$TMUX" ] && [ -n "$WAYLAND_DISPLAY" ]; then
+        exec tmux new-session "fastfetch; exec zsh"
       fi
 
       # Start UWSM
