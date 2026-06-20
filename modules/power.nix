@@ -13,7 +13,7 @@
 
 	# define time delay for hibernation
 	systemd.sleep.settings.Sleep = {
-		HibernateDelaySec = "1m";
+		HibernateDelaySec = "30m";
 		SuspendState = "mem";
 	};
 }
