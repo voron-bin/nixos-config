@@ -1,0 +1,198 @@
+/*
+ * Voronezh Firefox theme
+ *
+ * Setup:
+ * 1. In Firefox, go to about:config
+ * 2. Set toolkit.legacyUserProfileCustomizations.stylesheets = true
+ * 3. Go to about:profiles, find "Root Directory" for your default profile
+ * 4. Create a folder named "chrome" inside that profile directory
+ * 5. Save this file as userChrome.css inside the chrome folder
+ * 6. Restart Firefox
+ *
+ * Note: Firefox updates occasionally break userChrome selectors.
+ * If something looks off after a major update, the selectors may need adjustment.
+ */
+
+:root {
+  --voronezh-base:           #1C1917;
+  --voronezh-surface:        #262320;
+  --voronezh-surface-raised: #2F2B27;
+  --voronezh-border:         #3D3833;
+  --voronezh-text:           #D6CFC2;
+  --voronezh-text-muted:     #7A7568;
+  --voronezh-rust:           #A84826;
+  --voronezh-brick:          #7A2E1F;
+  --voronezh-ochre:          #B89650;
+  --voronezh-warning:        #C8302E;
+
+  --toolbar-bgcolor:             var(--voronezh-surface) !important;
+  --toolbar-color:               var(--voronezh-text) !important;
+  --tabs-border-color:           var(--voronezh-border) !important;
+  --chrome-content-separator-color: var(--voronezh-border) !important;
+  --lwt-toolbarbutton-hover-background: var(--voronezh-surface-raised) !important;
+  --lwt-toolbarbutton-active-background: var(--voronezh-surface-raised) !important;
+  --lwt-selected-tab-background-color: var(--voronezh-surface-raised) !important;
+  --toolbar-field-background-color: var(--voronezh-surface) !important;
+  --toolbar-field-color: var(--voronezh-text) !important;
+  --toolbar-field-focus-background-color: var(--voronezh-surface) !important;
+  --toolbar-field-focus-border-color: var(--voronezh-rust) !important;
+  --urlbar-box-bgcolor: var(--voronezh-surface) !important;
+}
+
+/* Main window background */
+#main-window,
+#browser,
+#navigator-toolbox {
+  background-color: var(--voronezh-base) !important;
+}
+
+/* Tab bar */
+#TabsToolbar,
+#tabbrowser-tabs {
+  background-color: var(--voronezh-base) !important;
+  border-bottom: 1px solid var(--voronezh-border) !important;
+}
+
+/* Individual tabs */
+.tabbrowser-tab .tab-background {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  background-color: transparent !important;
+}
+
+.tabbrowser-tab[selected="true"] .tab-background {
+  background-color: var(--voronezh-surface-raised) !important;
+  box-shadow: inset 3px 0 0 var(--voronezh-rust) !important;
+  border-radius: 0 !important;
+}
+
+.tabbrowser-tab:hover:not([selected="true"]) .tab-background {
+  background-color: var(--voronezh-surface) !important;
+}
+
+.tab-content {
+  color: var(--voronezh-text) !important;
+}
+
+.tab-close-button {
+  border-radius: 0 !important;
+}
+
+.tab-close-button:hover {
+  background-color: var(--voronezh-brick) !important;
+  fill: var(--voronezh-text) !important;
+}
+
+/* URL bar / navigation toolbar */
+#nav-bar {
+  background-color: var(--voronezh-surface) !important;
+  border-top: 1px solid var(--voronezh-border) !important;
+  border-bottom: 1px solid var(--voronezh-border) !important;
+  box-shadow: none !important;
+}
+
+#urlbar,
+#urlbar-background {
+  background-color: var(--voronezh-surface) !important;
+  color: var(--voronezh-text) !important;
+  border: 1px solid var(--voronezh-border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+#urlbar[focused="true"],
+#urlbar[focused="true"] #urlbar-background {
+  border-color: var(--voronezh-rust) !important;
+  box-shadow: none !important;
+}
+
+#urlbar-input {
+  color: var(--voronezh-text) !important;
+}
+
+/* URL bar dropdown (autocomplete) */
+.urlbarView {
+  background-color: var(--voronezh-surface) !important;
+  border: 1px solid var(--voronezh-border) !important;
+  border-radius: 0 !important;
+}
+
+.urlbarView-row[selected] {
+  background-color: var(--voronezh-surface-raised) !important;
+  box-shadow: inset 3px 0 0 var(--voronezh-rust) !important;
+}
+
+/* Toolbar buttons */
+toolbarbutton {
+  border-radius: 0 !important;
+}
+
+.toolbarbutton-1:hover,
+.toolbarbutton-1:hover > .toolbarbutton-icon {
+  background-color: var(--voronezh-surface-raised) !important;
+  border-radius: 0 !important;
+}
+
+/* Search bar */
+#searchbar {
+  background-color: var(--voronezh-surface) !important;
+  color: var(--voronezh-text) !important;
+  border: 1px solid var(--voronezh-border) !important;
+  border-radius: 0 !important;
+}
+
+/* Menus and panels */
+menupopup,
+panel,
+.panel-subview-body {
+  background-color: var(--voronezh-surface) !important;
+  color: var(--voronezh-text) !important;
+  border: 1px solid var(--voronezh-border) !important;
+  border-radius: 0 !important;
+}
+
+menuitem,
+menu,
+.panel-subview-body > toolbarbutton {
+  border-radius: 0 !important;
+}
+
+menuitem:hover,
+menu:hover,
+.panel-subview-body > toolbarbutton:hover {
+  background-color: var(--voronezh-surface-raised) !important;
+  color: var(--voronezh-text) !important;
+}
+
+/* Bookmark toolbar */
+#PersonalToolbar {
+  background-color: var(--voronezh-base) !important;
+  color: var(--voronezh-text) !important;
+  border-bottom: 1px solid var(--voronezh-border) !important;
+}
+
+.bookmark-item {
+  color: var(--voronezh-text) !important;
+}
+
+.bookmark-item:hover {
+  background-color: var(--voronezh-surface-raised) !important;
+  border-radius: 0 !important;
+}
+
+/* Sidebar */
+#sidebar-box {
+  background-color: var(--voronezh-surface) !important;
+  border-right: 1px solid var(--voronezh-border) !important;
+}
+
+/* Scrollbars */
+* {
+  scrollbar-color: var(--voronezh-border) var(--voronezh-base) !important;
+}
+
+/*** Hide Tab Close buttons ***/ 
+.tabbrowser-tab .tab-close-button {
+ visibility: hidden !important; 
+}
+

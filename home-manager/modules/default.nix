@@ -12,5 +12,6 @@
     ./starship.nix
     ./zsh.nix
     ./cursor.nix
+    ./firefox/firefox.nix
   ];
 }
