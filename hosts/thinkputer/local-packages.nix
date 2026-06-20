@@ -6,4 +6,9 @@
 		parsec-bin
 		bluez
 	];
+
+	hardware.graphics = {
+		enable = true;
+		extraPackages = [ pkgs.intel-media-driver ];
+	};
 }
