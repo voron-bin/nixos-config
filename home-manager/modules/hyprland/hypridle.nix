@@ -12,17 +12,17 @@
 
       listener = [
         {
-          timeout = 10;
+          timeout = 300;
           on-timeout = "notify-send 'You are idle!'";
           on-resume = "notify-send 'Welcome back!'";
         }
         {
-          timeout = 100;
+          timeout = 600;
           on-timeout = "loginctl lock-session";
         }
 
         {
-          timeout = 120;
+          timeout = 1200;
           on-timeout = "systemctl suspend-then-hibernate";
         }
       ];
