@@ -35,7 +35,7 @@
 			user = "boris";
 			# define hostnames for ease of use
 			hosts = [
-				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; }
+				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; uuid = "d8b9936a-4327-45b8-b95c-92a53d783d14"; resumeOffset = "533760"; }
 				{ hostname = "thinkputer"; stateVersion = "26.05"; gpuDriver = "integrated"; monitor = "1920x1080@60"; }
 			];
 
@@ -45,6 +45,9 @@
 					inherit inputs user;
 					inherit (host) hostname stateVersion gpuDriver;
 					host = host;
+					# passing variables needed for hibernation and swap
+					uuid = host.uuid or "";
+					resumeOffset = host.resumeOffset or "";
 				};
 
 				modules = [
