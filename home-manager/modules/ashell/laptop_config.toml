@@ -15,13 +15,6 @@ right = [
 	["RuClock", "Settings"]
 ]
 
-[[CustomModule]]
-name = "RuUpdates"
-type = "Button"
-command = 'kitty -e bash -c "yay; touch /tmp/ashell-updates-trigger; echo Готово - Нажмите Enter для выхода; read" &'
-listen_cmd = '''sh -c 'touch /tmp/ashell-updates-trigger; while true; do count=$(( $(checkupdates 2>/dev/null | wc -l) + $(yay -Qua 2>/dev/null | wc -l) )); if [ "$count" -gt 0 ]; then echo "{\"text\": \"ОБН $count\", \"alt\": \"pending\"}"; else echo "{\"text\": \"\", \"alt\": \"current\"}"; fi; inotifywait -q -t 1800 -e modify /tmp/ashell-updates-trigger >/dev/null 2>&1; done' '''
-alert = "pending"
-
 [window_title]
 truncate_title_after_length = 80
 
@@ -48,7 +41,7 @@ listen_cmd = '''sh -c 'while true; do mem=$(free -m | awk "/Mem:/ {printf \"%d/%
 [[CustomModule]]
 name = "RuTemp"
 type = "Text"
-listen_cmd = '''sh -c 'while true; do temp=$(sensors k10temp-pci-* | grep "Tctl" | awk "{print \$2}" | tr -d "+°C" | cut -d. -f1); echo "{\"text\": \"ТЕМП ${temp}°\", \"alt\": \"\"}"; sleep 3; done' '''
+listen_cmd = '''sh -c 'while true; do temp=$(sensors coretemp-isa-0000 | grep "Package id 0" | awk "{print \$4}" | tr -d "+°C" | cut -d. -f1); echo "{\"text\": \"ТЕМП ${temp}°\", \"alt\": \"\"}"; sleep 3; done' '''
 
 [[CustomModule]]
 name = "RuGpu"
@@ -63,7 +56,7 @@ workspace_names = ["А", "Б", "В", "Г", "Д", "Е", "Ж", "З", "И", "К"]
 
 [settings]
 lock_cmd = "hyprlock &"
-indicators = ["IdleInhibitor", "Audio", "Microphone", "Network"]
+indicators = ["IdleInhibitor", "Audio", "Microphone", "Network", "Battery", "Bluetooth"]
 
 [[CustomModule]]
 name = "RuVpn"

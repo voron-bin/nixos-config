@@ -31,7 +31,7 @@
     history.size = 10000;
     history.path = "${config.xdg.dataHome}/zsh/history";
 
-    initExtra = ''
+    initContent = ''
       # Start Tmux automatically if not already running. No Tmux in TTY
       if [ -z "$TMUX" ] && [ -n "$WAYLAND_DISPLAY" ]; then
         exec tmux new-session "fastfetch; exec zsh"
