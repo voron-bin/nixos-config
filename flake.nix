@@ -35,8 +35,8 @@
 			user = "boris";
 			# define hostnames for ease of use
 			hosts = [
-				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; uuid = "d8b9936a-4327-45b8-b95c-92a53d783d14"; resumeOffset = "533760"; }
-				{ hostname = "thinkputer"; stateVersion = "26.05"; gpuDriver = "integrated"; monitor = "1920x1080@60"; }
+				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; scale = "auto"; uuid = "d8b9936a-4327-45b8-b95c-92a53d783d14"; resumeOffset = "533760"; }
+				{ hostname = "thinkputer"; stateVersion = "26.05"; gpuDriver = "integrated"; monitor = "1920x1080@60"; scale = "0.5"; }
 			];
 
 			makeSystem = host: nixpkgs.lib.nixosSystem {
@@ -72,6 +72,7 @@
 						extraSpecialArgs = {
 							inherit inputs homeStateVersion user;
 							monitor = host.monitor or "";
+							scale = host.scale or "";
 						};
 					modules = [
 						./home-manager/home.nix
