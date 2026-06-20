@@ -16,6 +16,14 @@
         			"XDG_SCREENSHOTS_DIR,$HOME/screens"
       			];
 
+			cursor = {
+				enable_hyprcursor = false;
+			};
+			
+			input = {
+				accel_profile = "flat";
+			};
+
 			monitor = ",3440x1440@165,auto,auto";
 			"$mainMod" = "SUPER";
 			"$terminal" = "kitty";
@@ -32,7 +40,7 @@
 			
 			# running a short script to find a random wallpaper
 			# may not work under the nix directory structure
-			"sleep 1 && awww img '$(find ~/Wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n 1)' --transition-type none"
+			"sleep 1 && awww img '$(find ~/.wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n 1)' --transition-type none"
 
 			"[workspace special:ВСП silent] mullvad-vpn"
 			"[workspace 1 silent] $terminal"

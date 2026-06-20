@@ -42,7 +42,7 @@ in {
         }
         # Date in Russian
         {
-          text = "cmd[update:60000] LC_TIME=ru_RU.UTF-8 date +%A, %d %B";
+          text = "cmd[update:60000] LC_TIME=ru_RU.utf8 date '+%A, %d %B'";
           color = palette.text_muted;
           font_size = 20;
           font_family = "PxPlus IBM VGA 8x14";

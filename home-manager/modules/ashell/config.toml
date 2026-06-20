@@ -75,35 +75,33 @@ font_name = "PxPlus IBM VGA 8x14"
 scale_factor = 1.5
 style = "Solid"
 opacity = 1.0
+warning_color = "#B89650"
+text_color = "#D6CFC2"
+workspace_colors = [ "#A84826" ]
 
 [appearance.background_color]
-base = "#1C1917" # bar surface at rest
-strong = "#2F2B27" # raised surfaces, menu panels
-weak = "#141210" # recessed areas, subtle dividers
-text = "#D6CFC2" # warm bone, matches global text
+base = "#1C1917"
+weak = "#141210"
+strong = "#2F2B27"
+weakest = "#0F0D0C"
+neutral = "#262320"
+stronger = "#3D3833"
+text = "#D6CFC2"
 
 [appearance.primary_color]
-base = "#A84826" # rust, main accent
-strong = "#C25530" # brighter rust for hover/ active
-weak = "#7A2E1F" # brick, for pressed/ inactive states
-text = "#D6CFC2" # text sitting on rust reads as warm bone
+base = "#A84826"
+strong = "#C25530"
+weak = "#7A2E1F"
+text = "#D6CFC2"
 
 [appearance.danger_color]
 base = "#C8302E"
-weak = "#B89650"   # warnings in ochre instead of pink-red auto-generation
-text = "#D6CFC2"
-
-[appearance.secondary_color]
-base = "#3D3833"    # border_muted — used for borders, slider tracks
-strong = "#4D4843"  # slightly lifted for hover on borders
-weak = "#2F2B27"    # recedes into surface_raised
+strong = "#E0413E"
+weak = "#8C2120"
 text = "#D6CFC2"
 
 [appearance.success_color]
-base = "#7A8066"    # muted olive green, fits the aesthetic
+base = "#7A8066"
 strong = "#8F9579"
 weak = "#5F6451"
 text = "#D6CFC2"
-
-# other colors not in specific categories
-text_color = "#D6CFC2"
