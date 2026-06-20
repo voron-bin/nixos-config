@@ -16,7 +16,6 @@
   # and update this path if needed. Using label is safer than raw device paths.
 
   # make sure that this is disabled when installing a new device as the offset may change and this is dictated by the disk
-  powerManagement.enable = true;
   boot.resumeDevice = "/dev/disk/by-uuid/d8b9936a-4327-45b8-b95c-92a53d783d14";
 
   # Swap device declaration (disko creates the file, this tells the kernel to use it)

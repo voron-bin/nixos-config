@@ -35,7 +35,7 @@
 			user = "boris";
 			# define hostnames for ease of use
 			hosts = [
-				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; }
+				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; }
 				# can uncomment when I am ready for the laptop
 				# { hostname = "thinkputer"; stateVersion = "26.05"; }
 			];
@@ -44,7 +44,7 @@
 				system = system;
 				specialArgs = {
 					inherit inputs user;
-					inherit (host) hostname stateVersion;
+					inherit (host) hostname stateVersion gpuDriver;
 					host = host;
 				};
 
@@ -62,16 +62,31 @@
 					"${host.hostname}" = makeSystem host;
 				}) {} hosts;
 
-			homeConfigurations.${user} = inputs.home-manager.lib.homeManagerConfiguration {
-				pkgs = nixpkgs.legacyPackages.${system};
+#			homeConfigurations.${user} = inputs.home-manager.lib.homeManagerConfiguration {
+#				pkgs = nixpkgs.legacyPackages.${system};
+#
+#				extraSpecialArgs = {
+#					inherit inputs homeStateVersion user;
+#				};
+#
+#				modules = [
+#					./home-manager/home.nix
+#				];
+#			};
 
-				extraSpecialArgs = {
-					inherit inputs homeStateVersion user;
+			# Generate unique home configurations dynamically per host
+			homeConfigurations = nixpkgs.lib.foldl' (configs: host:
+				configs // {
+					"${user}@${host.hostname}" = inputs.home-manager.lib.homeManagerConfiguration {
+						pkgs = nixpkgs.legacyPackages.${system};
+						extraSpecialArgs = {
+							inherit inputs homeStateVersion user;
+							monitor = host.monitor or "";
+						};
+					modules = [
+						./home-manager/home.nix
+					];
 				};
-
-				modules = [
-					./home-manager/home.nix
-				];
-			};
+			}) {} hosts;
 		};
 	}

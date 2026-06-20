@@ -1,4 +1,4 @@
-{
+{ monitor, ... }: {
 	wayland.windowManager.hyprland = {
 		enable = true;
 		systemd.enable = true;
@@ -24,7 +24,7 @@
 				accel_profile = "flat";
 			};
 
-			monitor = ",3440x1440@165,auto,auto";
+			monitor = ",${monitor},auto,auto";
 			"$mainMod" = "SUPER";
 			"$terminal" = "kitty";
 			"$fileManager" = "$terminal -e sh -c 'ranger'";
