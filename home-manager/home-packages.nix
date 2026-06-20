@@ -61,6 +61,7 @@
 		stress
 		git                   # Version control
 		python3               # Python interpreter (includes pip)	
+		tmux
 
 		# ============================================================
 		# NETWORKING & SECURITY
