@@ -14,7 +14,9 @@
         			"XDG_SESSION_DESKTOP,Hyprland"
         			"QT_QPA_PLATFORM,wayland"
         			"XDG_SCREENSHOTS_DIR,$HOME/screens"
-      			];
+      				"XCURSOR_THEME,KDE-classic"
+				"XCURSOR_SIZE,24"
+			];
 
 			cursor = {
 				enable_hyprcursor = false;

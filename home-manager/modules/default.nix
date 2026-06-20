@@ -11,5 +11,6 @@
     ./rofi/rofi.nix
     ./starship.nix
     ./zsh.nix
+    ./cursor.nix
   ];
 }
