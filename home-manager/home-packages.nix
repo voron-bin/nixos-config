@@ -102,8 +102,8 @@
 		# ============================================================
 		greetd
 		tuigreet              # The package name is usually part of greetd-tuigreet
-		mako                  # Notification daemon
-
+		mako	# Notification daemon
+	
 		# ============================================================
 		# PDF & DOCUMENTS
 		# ============================================================

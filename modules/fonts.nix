@@ -1,10 +1,11 @@
+{ pkgs, ... }: {
 fonts.packages = [
-	font-awesome          
-	terminus_font
-	nerd-fonts.jetbrains-mono  
-	ubuntu-sans
-	nerd-fonts.ubuntu
-	ultimate-oldschool-pc-font-pack
-	papirus-icon-theme
-	papirus-folders
-};
+	pkgs.font-awesome          
+	pkgs.terminus_font
+	pkgs.terminus_font
+	pkgs.nerd-fonts.jetbrains-mono  
+	pkgs.ubuntu-sans
+	pkgs.nerd-fonts.ubuntu
+	pkgs.ultimate-oldschool-pc-font-pack
+	];
+}
