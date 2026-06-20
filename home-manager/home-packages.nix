@@ -78,7 +78,6 @@
 		rocmPackages.rocm-smi          # AMD GPU monitoring
 		solaar
 		smartmontools
-		xf86-video-amdgpu     # Often optional on Wayland but good to have
 		
 		# ============================================================
 		# PRINTING

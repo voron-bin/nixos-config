@@ -36,8 +36,7 @@
 			# define hostnames for ease of use
 			hosts = [
 				{ hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; }
-				# can uncomment when I am ready for the laptop
-				# { hostname = "thinkputer"; stateVersion = "26.05"; }
+				{ hostname = "thinkputer"; stateVersion = "26.05"; gpuDriver = "integrated"; monitor = "1920x1080@60"; }
 			];
 
 			makeSystem = host: nixpkgs.lib.nixosSystem {
@@ -61,18 +60,6 @@
 				configs // {
 					"${host.hostname}" = makeSystem host;
 				}) {} hosts;
-
-#			homeConfigurations.${user} = inputs.home-manager.lib.homeManagerConfiguration {
-#				pkgs = nixpkgs.legacyPackages.${system};
-#
-#				extraSpecialArgs = {
-#					inherit inputs homeStateVersion user;
-#				};
-#
-#				modules = [
-#					./home-manager/home.nix
-#				];
-#			};
 
 			# Generate unique home configurations dynamically per host
 			homeConfigurations = nixpkgs.lib.foldl' (configs: host:
