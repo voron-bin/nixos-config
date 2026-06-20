@@ -1,7 +1,6 @@
 {
 	powerManagement.enable = true;
 
-	services.power-profiles-daemon.enable = true;
 	# lid switch starts suspend then hibernate
 	services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
 	# hibernate on power button pressed
