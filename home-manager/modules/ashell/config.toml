@@ -13,7 +13,7 @@ right = [
 	["RuCpu", "RuRam", "RuTemp", "RuGpu"],
 	["RuVpn", "Privacy"],
 	["RuClock", "Settings"]
-]:
+]
 
 [window_title]
 truncate_title_after_length = 80
