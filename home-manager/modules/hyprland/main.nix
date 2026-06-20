@@ -31,7 +31,7 @@
 			"$terminal" = "kitty";
 			"$fileManager" = "$terminal -e sh -c 'ranger'";
 			"$menu" = "rofi -show drun";
-			"$browser" = "mullvad-browser";
+			"$browser" = "firefox";
 
 			exec-once = [
 			# may not need this in actuality, but will want to consider getting this fixed in case I need it in the future

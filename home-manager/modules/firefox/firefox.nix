@@ -9,7 +9,9 @@
         proton-pass
       ];
       settings = {
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;	
+	"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+	"layout.css.prefers-color-scheme.content-override" = 0;
       };
       extraConfig = builtins.readFile (pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/arkenfox/user.js/master/user.js";
