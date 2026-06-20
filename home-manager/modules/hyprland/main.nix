@@ -42,12 +42,14 @@
 			
 			# running a short script to find a random wallpaper
 			# may not work under the nix directory structure
-			"sleep 1 && awww img '$(find ~/.wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n 1)' --transition-type none"
+			''
+			sleep 1 && awww img "$(find ~/.wallpapers -type f \( -name '*.jpg' -o -name '*.png' \) | shuf -n 1)" --transition-type none
+			''
 
 			"[workspace special:ВСП silent] mullvad-vpn"
 			"[workspace 1 silent] $terminal"
 			"[workspace 2 silent] $browser"
-			"[workspace 10 silent] spotify-launcher"
+			"[workspace 10 silent] spotify"
 			"nextcloud --background"
 
 			# starting notification daemon
