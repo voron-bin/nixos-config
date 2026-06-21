@@ -41,7 +41,7 @@
 			user = "boris";
 			# define hostnames for ease of use
 			hosts = [
-				{ puterType = "desktop"; hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; scale = "auto"; uuid = "d8b9936a-4327-45b8-b95c-92a53d783d14"; resumeOffset = "533760"; }
+				{ puterType = "desktop"; hostname = "nixputer"; stateVersion = "26.05"; gpuDriver = "discrete"; monitor = "3440x1440@165"; scale = "auto"; uuid = "d8b9936a-4327-45b8-b95c-92a53d783d14"; resumeOffset = "203982227"; }
 				{ puterType = "laptop"; hostname = "thinkputer"; stateVersion = "26.05"; gpuDriver = "integrated"; monitor = "1920x1080@60"; scale = "1"; uuid = "229dd9c7-4b5a-4176-a5a8-c128654dfbb9"; resumeOffset = "8820704"; }
 			];
 
