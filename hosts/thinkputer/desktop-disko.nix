@@ -55,7 +55,7 @@
                     };
                     "/swap" = {
                       mountpoint = "/.swapvol";
-                      swap.swapfile.size = "16G"; # match device RAM
+                      swap.swapfile.size = "24G"; # 1.5 x device RAM
                     };
                   };
                 };

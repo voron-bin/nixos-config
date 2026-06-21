@@ -13,40 +13,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-#  fileSystems."/" =
-#    { device = "/dev/mapper/crypted";
-#      fsType = "btrfs";
-#      options = [ "subvol=root" ];
-#    };
-
-#  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/b49a5add-85ff-43b2-8ce1-c3562ac5ce78";
-
-#  fileSystems."/.swapvol" =
-#    { device = "/dev/mapper/crypted";
-#      fsType = "btrfs";
-#      options = [ "subvol=swap" ];
-#    };
-
-#  fileSystems."/boot" =
-#    { device = "/dev/disk/by-uuid/286E-D2DA";
-#      fsType = "vfat";
-#      options = [ "fmask=0077" "dmask=0077" ];
-#    };
-
-#  fileSystems."/home" =
-#    { device = "/dev/mapper/crypted";
-#      fsType = "btrfs";
-#      options = [ "subvol=home" ];
-#    };
-
-#  fileSystems."/nix" =
-#    { device = "/dev/mapper/crypted";
-#      fsType = "btrfs";
-#      options = [ "subvol=nix" ];
-#    };
-
-  swapDevices = [ ];
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
