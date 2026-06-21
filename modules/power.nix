@@ -2,10 +2,12 @@
 	powerManagement.enable = true;
 
 	# lid switch starts suspend then hibernate
-	services.logind.settings.Login.LidSwitch = "suspend-then-hibernate";
+	services.logind.settings.Login.HandleLidSwitch = "suspend-then-hibernate";
+	services.logind.settings.Login.HandleLidSwitchExternalPower = "suspend-then-hibernate";
+
 	# hibernate on power button pressed
-	services.logind.settings.Login.PowerKey = "hibernate";
-	services.logind.settings.Login.PowerKeyLongPress = "poweroff";
+	services.logind.settings.Login.HandlePowerKey = "hibernate";
+	services.logind.settings.Login.HandlePowerKeyLongPress = "poweroff";
 
 	# suspend first
 	boot.kernelParams = ["mem_sleep_default=deep"];
