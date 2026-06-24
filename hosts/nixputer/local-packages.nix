@@ -10,5 +10,6 @@
 		# purely an option if I want a hostname to have different packages than is standard
 		steam
 		xf86-video-amdgpu
+		discord
 	];
 }
