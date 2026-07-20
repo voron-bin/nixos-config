@@ -120,5 +120,6 @@
 		# unrar                 # RAR extraction
 		# wget                  # Standard download tool
 		# curl                  # HTTP tool
+		parsec-bin
 	];
 }
