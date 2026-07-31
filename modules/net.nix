@@ -3,9 +3,9 @@
 
 	networking.enableIPv6 = true;
 
-	services.mullvad-vpn.gui.enable = true;
+	services.mullvad.enable = true;
 
-	services.mullvad-vpn.package = pkgs.mullvad-vpn;
+	services.mullvad.package = pkgs.mullvad;
 
 	networking.nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.one.one.one" ];
 
