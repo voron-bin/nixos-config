@@ -62,7 +62,12 @@ wayland.windowManager.hyprland.settings = {
 		"alt, space, exec, $menu"
 		# launch browser
 		"$mainMod, B, exec, $browser"
-		
+		# hyprshot to satty
+		# region capture
+		"$mainMod, K, exec, hyprshot --mode region --raw | satty --filename -"
+		# full screen capture
+		"$mainMod SHIFT, K, exec, hyprshot --mode window --raw | satty --filename -"
+
 		# ---session control---
 		# log out of session (go back to display manager)
 		"$mainMod, E, exit,"

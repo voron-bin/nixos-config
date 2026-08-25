@@ -24,6 +24,7 @@
 		starship
 		zsh
 		awww
+		satty
 
 		# ============================================================
 		# BROWSERS & WEB APPLICATIONS
