@@ -121,6 +121,6 @@
 		# unrar                 # RAR extraction
 		# wget                  # Standard download tool
 		# curl                  # HTTP tool
-		parsec-bin
+		# parsec-bin		# failed connection
 	];
 }
