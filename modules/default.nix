@@ -16,5 +16,6 @@
     ./zswap.nix
     ./fonts.nix
     ./power.nix
+    ./nix-ld.nix
   ];
 }
