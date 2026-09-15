@@ -35,7 +35,6 @@
 		# OFFICE & PRODUCTIVITY
 		# ============================================================
 		libreoffice
-		gnucash
 		inkscape
 		librecad
 		nextcloud-client
@@ -76,7 +75,6 @@
 		android-tools         # ADB/Fastboot
 		brightnessctl
 		rocmPackages.rocm-smi          # AMD GPU monitoring
-		solaar
 		smartmontools
 		
 		# ============================================================
@@ -121,6 +119,6 @@
 		# unrar                 # RAR extraction
 		# wget                  # Standard download tool
 		# curl                  # HTTP tool
-		# parsec-bin		# failed connection
+		parsec-bin		# failed connection
 	];
 }
