@@ -120,5 +120,6 @@
 		# wget                  # Standard download tool
 		# curl                  # HTTP tool
 		parsec-bin		# failed connection
+		prismlauncher
 	];
 }
