@@ -28,8 +28,10 @@
 	services.printing = {
 		enable = true;
 		drivers = with pkgs; [
-			cups-filters
-			cups-browsed
+			gutenprint
+			foomatic-db
 		];
+
+		browsing = false;
 	};
 }
