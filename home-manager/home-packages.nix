@@ -121,5 +121,6 @@
 		# curl                  # HTTP tool
 		parsec-bin		# failed connection
 		prismlauncher
+		pipx
 	];
 }
