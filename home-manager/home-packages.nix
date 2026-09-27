@@ -47,7 +47,8 @@
 		pipewire
 		wireplumber
 		alsa-utils            # Low-level ALSA tools
-				
+		feishin
+
 		# ============================================================
 		# TERMINAL & CLI TOOLS
 		# ============================================================
