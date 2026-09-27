@@ -49,7 +49,7 @@
 			"[workspace special:ВСП silent] mullvad-vpn"
 			"[workspace 1 silent] $terminal"
 			"[workspace 2 silent] $browser"
-			"[workspace 10 silent] spotify"
+			"[workspace 10 silent] feishin"
 			"nextcloud --background"
 
 			# starting notification daemon
