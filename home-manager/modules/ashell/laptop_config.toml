@@ -66,11 +66,13 @@ listen_cmd = '''sh -c 'while true; do if nmcli -t -f TYPE,STATE connection show 
 [appearance]
 font_name = "PxPlus IBM VGA 8x14"
 scale_factor = 1.5
-style = "solid"
 opacity = 1.0
 warning_color = "#B89650"
 text_color = "#D6CFC2"
 workspace_colors = [ "#A84826" ]
+
+[appearance.bar]
+surface = "solid"
 
 [appearance.background_color]
 base = "#1C1917"
