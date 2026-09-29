@@ -11,5 +11,6 @@
 		steam
 		xf86-video-amdgpu
 		discord
+		prismlauncher
 	];
 }
