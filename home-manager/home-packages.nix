@@ -60,7 +60,7 @@
 		rsync
 		stress
 		git                   # Version control
-		python3               # Python interpreter (includes pip)	
+		# python3               # Comes packaged with jupyter	
 		tmux
 
 		# ============================================================
@@ -122,5 +122,6 @@
 		# curl                  # HTTP tool
 		parsec-bin		# failed connection
 		# pipx
+		jupyter-all
 	];
 }
