@@ -62,6 +62,7 @@
 		git                   # Version control
 		# python3               # Comes packaged with jupyter	
 		tmux
+		bsdgames		# terminal games
 
 		# ============================================================
 		# NETWORKING & SECURITY
