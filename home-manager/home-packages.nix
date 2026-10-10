@@ -123,5 +123,7 @@
 		# curl                  # HTTP tool
 		parsec-bin		# failed connection
 		# pipx
-		];
+		pandoc
+		
+	];
 }
