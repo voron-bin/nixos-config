@@ -7,7 +7,7 @@
         ublock-origin
         floccus
         proton-pass
-	kagi-search
+	kagi-privacy-pass
       ];
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;	
