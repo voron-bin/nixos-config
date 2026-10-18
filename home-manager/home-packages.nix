@@ -124,6 +124,7 @@
 		parsec-bin		# failed connection
 		# pipx
 		pandoc
+		ungoogled-chromium	# for things that need chrome
 		
 	];
 }
