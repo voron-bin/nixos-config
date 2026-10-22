@@ -30,7 +30,8 @@
 		# BROWSERS & WEB APPLICATIONS
 		# ============================================================
 		freetube
-		
+		ungoogled-chromium	# for things that need chrome
+
 		# ============================================================
 		# OFFICE & PRODUCTIVITY
 		# ============================================================
@@ -38,6 +39,7 @@
 		inkscape
 		librecad
 		nextcloud-client
+		discord
 
 		# ============================================================
 		# MEDIA & AUDIO/VIDEO
@@ -124,7 +126,6 @@
 		parsec-bin		# failed connection
 		# pipx
 		pandoc
-		ungoogled-chromium	# for things that need chrome
 		
 	];
 }
