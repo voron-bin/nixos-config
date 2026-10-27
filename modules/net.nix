@@ -28,8 +28,8 @@
 	services.printing = {
 		enable = true;
 		drivers = with pkgs; [
+			foomatic-db-ppds
 			gutenprint
-			foomatic-db
 		];
 
 		browsing = false;
