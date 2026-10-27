@@ -4,6 +4,7 @@
       numpy
       pandas
       matplotlib
+      sympy
       jupyterlab
     ]))
   ];
