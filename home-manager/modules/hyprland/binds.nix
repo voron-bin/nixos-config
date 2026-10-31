@@ -1,103 +1,95 @@
+{ lib, ... }:
+
+let
+  mk = lib.generators.mkLuaInline;
+
+  # Each helper returns one hl.bind(keys, dispatcher[, flags]) call
+  bind = keys: action: { _args = [ keys (mk action) ]; };
+  bindf = keys: action: flags: { _args = [ keys (mk action) flags ]; };
+
+  # Dispatcher builders (return Lua source as a string)
+  exec = cmd: ''hl.dsp.exec_cmd("${cmd}")'';
+  focusDir = dir: ''hl.dsp.focus({ direction = "${dir}" })'';
+  focusWs = ws: ''hl.dsp.focus({ workspace = ${ws} })'';
+  moveToWs = ws: ''hl.dsp.window.move({ workspace = ${ws} })'';
+
+  # SUPER + [1-9,0] to switch, SUPER + SHIFT + [1-9,0] to move (key 0 = workspace 10)
+  workspaceBinds = lib.concatMap (n:
+    let key = toString (lib.mod n 10); in [
+      (bind "SUPER + ${key}" (focusWs (toString n)))
+      (bind "SUPER + SHIFT + ${key}" (moveToWs (toString n)))
+    ]) (lib.range 1 10);
+
+  # volume/brightness keys: work on lockscreen and repeat when held
+  fnKey = keys: cmd: bindf keys (exec cmd) { locked = true; repeating = true; };
+
+  # media keys: work on lockscreen
+  mediaKey = keys: cmd: bindf keys (exec cmd) { locked = true; };
+in
 {
-wayland.windowManager.hyprland.settings = {
-	# keyb bindings
-	bind = [
-		# ---window control---
-		# kill window
-		"$mainMod, Q, killactive,"
-		# toggle the floating status of the window
-		"$mainMod, V, togglefloating,"
+  wayland.windowManager.hyprland.settings.bind =
+    [
+      # ---window control---
+      # kill window
+      (bind "SUPER + Q" "hl.dsp.window.close()")
+      # toggle the floating status of the window
+      (bind "SUPER + V" ''hl.dsp.window.float({ action = "toggle" })'')
 
-		# Move focus with mainMod + arrow keys
-		"$mainMod, left, movefocus, l"
-		"$mainMod, right, movefocus, r"
-		"$mainMod, up, movefocus, u"
-		"$mainMod, down, movefocus, d"
+      # Move focus with SUPER + arrow keys
+      (bind "SUPER + left" (focusDir "left"))
+      (bind "SUPER + right" (focusDir "right"))
+      (bind "SUPER + up" (focusDir "up"))
+      (bind "SUPER + down" (focusDir "down"))
 
-		# ---worspaces---
-		# Switch workspaces with mainMod + [0-9]
-		"$mainMod, 1, workspace, 1"
-		"$mainMod, 2, workspace, 2"
-		"$mainMod, 3, workspace, 3"
-		"$mainMod, 4, workspace, 4"
-		"$mainMod, 5, workspace, 5"
-		"$mainMod, 6, workspace, 6"
-		"$mainMod, 7, workspace, 7"
-		"$mainMod, 8, workspace, 8"
-		"$mainMod, 9, workspace, 9"
-		"$mainMod, 0, workspace, 10"
+      # special workspace
+      (bind "SUPER + S" ''hl.dsp.workspace.toggle_special("ВСП")'')
+      (bind "SUPER + SHIFT + S" (moveToWs ''"special:ВСП"''))
 
-		# Move active window to a workspace with mainMod + SHIFT + [0-9]
-		"$mainMod SHIFT, 1, movetoworkspace, 1"
-		"$mainMod SHIFT, 2, movetoworkspace, 2"
-		"$mainMod SHIFT, 3, movetoworkspace, 3"
-		"$mainMod SHIFT, 4, movetoworkspace, 4"
-		"$mainMod SHIFT, 5, movetoworkspace, 5"
-		"$mainMod SHIFT, 6, movetoworkspace, 6"
-		"$mainMod SHIFT, 7, movetoworkspace, 7"
-		"$mainMod SHIFT, 8, movetoworkspace, 8"
-		"$mainMod SHIFT, 9, movetoworkspace, 9"
-		"$mainMod SHIFT, 0, movetoworkspace, 10"
+      # Scroll through existing workspaces with SUPER + scroll
+      (bind "SUPER + mouse_down" (focusWs ''"e+1"''))
+      (bind "SUPER + mouse_up" (focusWs ''"e-1"''))
 
-		# special workspace
-		"$mainMod,       S, togglespecialworkspace, ВСП"
-		"$mainMod SHIFT, S, movetoworkspace, special:ВСП"
+      # ---binds for dwindle mode---
+      # turns active window into a pseudo tile
+      (bind "SUPER + P" "hl.dsp.window.pseudo()")
+      # changes the split direction of the active window and active window pair
+      (bind "SUPER + J" ''hl.dsp.layout("togglesplit")'')
 
-		# Scroll through existing workspaces with mainMod + scroll
-		"$mainMod, mouse_down, workspace, e+1"
-		"$mainMod, mouse_up, workspace, e-1"
-		
-		# ---binds for dwindle mode---
-		# turns active window int a pseudo tile
-		"$mainMod, P, pseudo,"
-		# changes the split direction of the active window and active window pair
-		"$mainMod, J, layoutmsg, togglesplit"
+      # ---program launching---
+      (bind "SUPER + T" (exec "kitty"))
+      (bind "SUPER + F" (exec "kitty -e sh -c 'ranger'"))
+      # launch rofi (to launch another app)
+      (bind "ALT + space" (exec "rofi -show drun"))
+      (bind "SUPER + B" (exec "firefox"))
+      # hyprshot to satty
+      (bind "SUPER + K" (exec "hyprshot --mode region --raw | satty --filename -"))
+      (bind "SUPER + SHIFT + K" (exec "hyprshot --mode window --raw | satty --filename -"))
 
-		# ---program launching---
-		# launch terminal
-		"$mainMod, T, exec, $terminal"
-		# launch file manager
-		"$mainMod, F, exec, $fileManager"
-		# launch rofi (to launch another app)
-		"alt, space, exec, $menu"
-		# launch browser
-		"$mainMod, B, exec, $browser"
-		# hyprshot to satty
-		# region capture
-		"$mainMod, K, exec, hyprshot --mode region --raw | satty --filename -"
-		# full screen capture
-		"$mainMod SHIFT, K, exec, hyprshot --mode window --raw | satty --filename -"
+      # ---session control---
+      # log out of session (go back to display manager)
+      (bind "SUPER + E" "hl.dsp.exit()")
+      # lock screen
+      (bind "SUPER + L" (exec "hyprlock"))
 
-		# ---session control---
-		# log out of session (go back to display manager)
-		"$mainMod, E, exit,"
-		# lock screen
-		"$mainMod, L, exec, hyprlock"
-	];
-	
-	# mouse bindings
-	bindm = [
-		# Move/resize windows with mainMod + LMB/RMB and dragging
-		"$mainMod, mouse:272, movewindow"
-		"$mainMod, mouse:273, resizewindow"
-	];
+      # ---mouse binds---
+      # Move/resize windows with SUPER + LMB/RMB and dragging
+      (bindf "SUPER + mouse:272" "hl.dsp.window.drag()" { mouse = true; })
+      (bindf "SUPER + mouse:273" "hl.dsp.window.resize()" { mouse = true; })
 
-	# laptop function key bindings
-	bindel = [
-		",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-		",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-		",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-		",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-		",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-		",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
-	];
+      # ---laptop function keys---
+      (fnKey "XF86AudioRaiseVolume" "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+")
+      (fnKey "XF86AudioLowerVolume" "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")
+      (fnKey "XF86AudioMute" "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+      (fnKey "XF86AudioMicMute" "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle")
+      (fnKey "XF86MonBrightnessUp" "brightnessctl -e4 -n2 set 5%+")
+      (fnKey "XF86MonBrightnessDown" "brightnessctl -e4 -n2 set 5%-")
 
-	# hardware keys for media controls -- REQUIRES playerctl --
-	bindl = [
-		", XF86AudioNext, exec, playerctl next"
-		", XF86AudioPause, exec, playerctl play-pause"
-		", XF86AudioPlay, exec, playerctl play-pause"
-		", XF86AudioPrev, exec, playerctl previous"
-	];
-};
+      # ---hardware media keys -- REQUIRES playerctl---
+      (mediaKey "XF86AudioNext" "playerctl next")
+      (mediaKey "XF86AudioPause" "playerctl play-pause")
+      (mediaKey "XF86AudioPlay" "playerctl play-pause")
+      (mediaKey "XF86AudioPrev" "playerctl previous")
+    ]
+    # ---workspaces---
+    ++ workspaceBinds;
 }
