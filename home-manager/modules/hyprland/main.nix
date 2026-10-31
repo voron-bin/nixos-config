@@ -3,7 +3,7 @@
 		enable = true;
 		systemd.enable = true;
 		# stating the old .conf style of config file for compat
-		configType = "hyprlang";
+		configType = "lua";
 		settings = {
 			env = [
         			# env variable for apps launched while using hyprland
