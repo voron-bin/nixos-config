@@ -20,7 +20,6 @@
 		hyprpolkitagent       # Required for Polkit dialogs in Hyprland
 		hyprshot
 		kitty
-		rofi
 		starship
 		zsh
 		awww
@@ -104,8 +103,7 @@
 		# ============================================================
 		greetd
 		tuigreet              # The package name is usually part of greetd-tuigreet
-		mako	# Notification daemon
-	
+			
 		# ============================================================
 		# PDF & DOCUMENTS
 		# ============================================================

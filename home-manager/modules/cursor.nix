@@ -12,7 +12,7 @@ let
 
 in {
   home.pointerCursor = {
-    gtk.enable = true;
+    enable = true;
     package = kdeClassicCursors;
     name = "KDE-classic";  # confirm exact internal folder name after extraction
     size = 24;

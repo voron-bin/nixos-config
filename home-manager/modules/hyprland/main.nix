@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, monitor, scale,  ... }:
 
 let
   mk = lib.generators.mkLuaInline;
@@ -10,6 +10,27 @@ let
   '';
 in
 {
+  # New random wallpaper every 3 hours (change both values below to taste).
+  # The first one is still picked at login by the autostart block.
+  systemd.user.services.random-wallpaper = {
+    Unit.Description = "Pick a random wallpaper";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${wallpaper}";
+      Environment = [
+        "PATH=/run/wrappers/bin:/run/current-system/sw/bin:/etc/profiles/per-user/%u/bin:%h/.nix-profile/bin"
+      ];
+    };
+  };
+  systemd.user.timers.random-wallpaper = {
+    Unit.Description = "Change the wallpaper every few hours";
+    Timer = {
+      OnStartupSec = "3h";
+      OnUnitActiveSec = "3h";
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.enable = true;
@@ -34,9 +55,9 @@ in
       # mode = "<width>x<height>@<refresh>", e.g. "2560x1440@165"; "preferred" lets Hyprland choose
       monitor = {
         output = "";
-        mode = "3440x1440@165";
+        mode = monitor;
         position = "auto";
-        scale = 1;
+        scale = scale;
       };
 
       # Replaces exec-once
@@ -45,8 +66,8 @@ in
           "hyprland.start"
           (mk ''
             function()
-              -- wallpaper daemon and ashell
-              hl.exec_cmd("awww-daemon & ashell")
+              -- wallpaper daemon (the bar is started by the quickshell systemd service)
+              hl.exec_cmd("awww-daemon")
               -- random wallpaper (script defined in the let block above)
               hl.exec_cmd("${wallpaper}")
 
@@ -56,8 +77,11 @@ in
               hl.exec_cmd("feishin", { workspace = "10 silent" })
               hl.exec_cmd("nextcloud --background")
 
-              -- notification daemon
-              hl.exec_cmd("mako")
+              -- clipboard history (feeds the SUPER + C picker)
+              hl.exec_cmd("wl-paste --type text --watch cliphist store")
+              hl.exec_cmd("wl-paste --type image --watch cliphist store")
+
+              -- (notifications are handled by the quickshell bar, so no mako here)
             end
           '')
         ];

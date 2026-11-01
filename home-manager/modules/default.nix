@@ -1,12 +1,11 @@
 {
   imports = [
-    ./ashell/ashell.nix
+    ./quickshell/quickshell.nix
     ./git.nix
     ./btop/btop.nix
     ./hyprland
     ./fastfetch.nix
     ./kitty.nix
-    ./mako.nix
     ./nvim/nvim.nix
     ./rofi/rofi.nix
     ./starship.nix

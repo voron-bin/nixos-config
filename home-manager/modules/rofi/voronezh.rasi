@@ -48,6 +48,9 @@ window {
     border-color:     @rust;
     border-radius:    0px;
     padding:          2;
+    location:         center;
+    anchor:           center;
+    width:            640px;
 }
 mainbox {
     border:  0;
@@ -56,27 +59,35 @@ mainbox {
 message {
     border:       1px 0px 0px ;
     border-color: @separatorcolor;
-    padding:      1px ;
+    padding:      4px 8px ;
 }
 textbox {
     text-color: @foreground;
 }
 listview {
-    fixed-height: 0;
+    lines:        10;
+    columns:      1;
+    fixed-height: true;
     border:       1px 0px 0px ;
     border-color: @separatorcolor;
     spacing:      2px ;
     scrollbar:    false;
-    padding:      2px 0px 0px ;
+    padding:      4px 0px 0px ;
 }
 element {
     border:       0px 0px 0px 3px ;
     border-color: transparent;
-    padding:      2px 6px ;
+    padding:      4px 8px ;
+    spacing:      12px ;
+}
+element-icon {
+    size:             1.6em;
+    background-color: inherit;
 }
 element-text {
     background-color: inherit;
     text-color:       inherit;
+    vertical-align:   0.5;
 }
 element.normal.normal {
     background-color: @normal-background;
@@ -141,8 +152,8 @@ button.selected {
 inputbar {
     spacing:    0;
     text-color: @normal-foreground;
-    padding:    4px 6px ;
-    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
+    padding:    8px 10px ;
+    children:   [ prompt,textbox-prompt-colon,entry,num-filtered-rows,textbox-num-sep,num-rows,case-indicator ];
 }
 case-indicator {
     spacing:    0;
@@ -161,4 +172,17 @@ textbox-prompt-colon {
     str:        " ►";
     margin:     0px 0.5em 0em 0em ;
     text-color: @rust;
+}
+num-filtered-rows {
+    expand:     false;
+    text-color: @text-muted;
+}
+textbox-num-sep {
+    expand:     false;
+    str:        "/";
+    text-color: @text-muted;
+}
+num-rows {
+    expand:     false;
+    text-color: @text-muted;
 }

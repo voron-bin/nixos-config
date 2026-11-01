@@ -13,7 +13,7 @@
     ];
 
     # 2. Translate init.vim settings
-    extraLuaConfig = ''
+    initLua = ''
       -- Basic Vim Settings
       vim.opt.number = true
       vim.opt.relativenumber = true

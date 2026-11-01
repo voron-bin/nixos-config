@@ -1,7 +1,52 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   mk = lib.generators.mkLuaInline;
+
+  # SUPER + R: pick a region and start recording; press again to stop.
+  # The bar shows ЗАП while it runs. Files go to ~/Videos.
+  record = pkgs.writeShellScript "toggle-record" ''
+    export PATH=${lib.makeBinPath [ pkgs.wf-recorder pkgs.slurp pkgs.procps pkgs.libnotify pkgs.coreutils ]}:$PATH
+    if pgrep -x wf-recorder >/dev/null; then
+      pkill -INT -x wf-recorder
+      notify-send "Запись" "Сохранено в ~/Videos"
+      exit 0
+    fi
+    mkdir -p "$HOME/Videos"
+    region=$(slurp) || exit 0
+    exec wf-recorder -g "$region" -f "$HOME/Videos/rec-$(date +%Y%m%d-%H%M%S).mp4"
+  '';
+
+  # SUPER + C: clipboard history (БУФЕР). Pick an entry to put it back on the clipboard.
+  clipboard = pkgs.writeShellScript "rofi-clipboard" ''
+    export PATH=${lib.makeBinPath [ pkgs.cliphist pkgs.wl-clipboard pkgs.rofi pkgs.coreutils ]}:$PATH
+    cliphist list | rofi -dmenu -p "БУФЕР" | cliphist decode | wl-copy
+  '';
+
+  # SUPER + W: wallpaper picker (ОБОИ), thumbnail grid of ~/.wallpapers
+  wallpickGrid = "window { width: 1000px; } listview { columns: 4; lines: 3; } element { orientation: vertical; padding: 8px; } element-icon { size: 10em; } element-text { horizontal-align: 0.5; }";
+  wallpick = pkgs.writeShellScript "rofi-wallpaper" ''
+    export PATH=${lib.makeBinPath [ pkgs.rofi pkgs.findutils pkgs.coreutils pkgs.awww ]}:$PATH
+    dir="$HOME/.wallpapers"
+    choice=$(
+      find "$dir" -type f \( -name '*.jpg' -o -name '*.png' \) | sort | while read -r f; do
+        printf '%s\0icon\x1f%s\n' "$(basename "$f")" "$f"
+      done | rofi -dmenu -show-icons -p "ОБОИ" -theme-str '${wallpickGrid}'
+    ) || exit 0
+    [ -n "$choice" ] && awww img "$dir/$choice" --transition-type none
+  '';
+
+  # SUPER + SHIFT + / : keybind cheat sheet (КЛАВИШИ), read live from Hyprland
+  cheatsheet = pkgs.writeShellScript "rofi-keybinds" ''
+    export PATH=${lib.makeBinPath [ pkgs.rofi pkgs.jq pkgs.coreutils pkgs.hyprland ]}:$PATH
+    hyprctl binds -j | jq -r '.[] |
+      ((if ((.modmask / 64 | floor) % 2) == 1 then "SUPER + " else "" end)
+      + (if ((.modmask / 8 | floor) % 2) == 1 then "ALT + " else "" end)
+      + (if ((.modmask / 4 | floor) % 2) == 1 then "CTRL + " else "" end)
+      + (if (.modmask % 2) == 1 then "SHIFT + " else "" end)
+      + .key + "   ->   " + .dispatcher + " " + .arg)' \
+      | rofi -dmenu -p "КЛАВИШИ" >/dev/null
+  '';
 
   # Each helper returns one hl.bind(keys, dispatcher[, flags]) call
   bind = keys: action: { _args = [ keys (mk action) ]; };
@@ -27,6 +72,8 @@ let
   mediaKey = keys: cmd: bindf keys (exec cmd) { locked = true; };
 in
 {
+  home.packages = [ pkgs.cliphist pkgs.wl-clipboard pkgs.jq ];
+
   wayland.windowManager.hyprland.settings.bind =
     [
       # ---window control---
@@ -64,6 +111,20 @@ in
       # hyprshot to satty
       (bind "SUPER + K" (exec "hyprshot --mode region --raw | satty --filename -"))
       (bind "SUPER + SHIFT + K" (exec "hyprshot --mode window --raw | satty --filename -"))
+      # screen recording toggle
+      (bind "SUPER + R" (exec "${record}"))
+
+      # ---rofi extras---
+      # window switcher
+      (bind "ALT + Tab" (exec "rofi -show window"))
+      # clipboard history
+      (bind "SUPER + C" (exec "${clipboard}"))
+      # wallpaper picker
+      (bind "SUPER + W" (exec "${wallpick}"))
+      # keybind cheat sheet
+      (bind "SUPER + SHIFT + slash" (exec "${cheatsheet}"))
+      # calculator (needs rofi-calc, see rofi.nix)
+      (bind "SUPER + equal" (exec "rofi -show calc -modi calc -no-show-match -no-sort"))
 
       # ---session control---
       # log out of session (go back to display manager)
