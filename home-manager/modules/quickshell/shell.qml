@@ -551,6 +551,40 @@ ShellRoot {
             // which popup is open: "", "media", "dash", "control", "session"
             property string open: ""
             function toggle(name) { open = (open === name) ? "" : name; }
+
+            // ---- responsive bar: items drop out (in this order) before they can collide ----
+            //   1. window title  2. performance stats  3. mic + network text
+            // The music text in the middle never goes away. Needs are measured from the
+            // items' own widths, so they do not depend on what is currently shown.
+            readonly property real mediaHalf: mediaT.visible ? mediaT.width / 2 : 0
+            readonly property real leftBase: 10 + launcherRow.implicitWidth
+            readonly property real btW: btL.item ? btL.item.implicitWidth : 0
+            readonly property real rightBase:
+                10 + 20
+                + uvdT.implicitWidth + dateT.implicitWidth + idleT.implicitWidth
+                + volT.implicitWidth + sessT.implicitWidth
+                + (root.vpnOn ? vpnT.implicitWidth : 0)
+                + (root.rec ? recT.implicitWidth : 0)
+                + (root.battery >= 0 ? batT.implicitWidth : 0)
+                + btW
+                + 24 * (2 + (root.vpnOn ? 1 : 0) + (root.rec ? 1 : 0))
+                + 14 * (2 + (root.battery >= 0 ? 1 : 0) + (btW > 0 ? 1 : 0))
+            readonly property real statsFull:
+                cpuT.implicitWidth + memT.implicitWidth
+                + (root.cpuTemp >= 0 ? tempT.implicitWidth : 0)
+                + (root.gpuTemp >= 0 ? gpuT.implicitWidth : 0)
+                + 14 * (1 + (root.cpuTemp >= 0 ? 1 : 0) + (root.gpuTemp >= 0 ? 1 : 0))
+                + 24
+            readonly property real micNetFull: micT.implicitWidth + netT.implicitWidth + 28
+            // room each side may use. Without music playing the sides share the whole bar.
+            readonly property real availR: mediaT.visible ? width / 2 - mediaHalf - 24
+                                                          : width - leftBase - 24
+            readonly property real availL: mediaT.visible ? width / 2 - mediaHalf - 24
+                                                          : width - rightBase - 24
+            readonly property bool showStats: rightBase + statsFull + micNetFull <= availR
+            readonly property bool showMicNet: rightBase + micNetFull <= availR
+            readonly property bool showTitle: leftBase + 20 + 120 <= availL
+            readonly property real titleMax: Math.max(0, Math.min(width * 0.3, availL - leftBase - 20))
             onOpenChanged: {
                 if (open === "control") ctlStatus.running = true;
                 if (open === "ws") Hyprland.refreshToplevels();   // fresh window positions for the preview
@@ -627,6 +661,7 @@ ShellRoot {
 
                 // launcher + workspaces
                 RowLayout {
+                    id: launcherRow
                     spacing: 10
 
                     BarText {
@@ -690,15 +725,18 @@ ShellRoot {
 
                 // window title (truncated like truncate_title_after_length = 80)
                 BarText {
+                    id: titleT
+                    visible: panel.showTitle
                     readonly property string raw: Hyprland.activeToplevel?.title ?? ""
                     text: raw.length > 80 ? raw.slice(0, 80) + "…" : raw
                     elide: Text.ElideRight
-                    Layout.maximumWidth: panel.width * 0.25
+                    Layout.maximumWidth: panel.titleMax
                 }
             }
 
             // ================= CENTER =================
             BarText {
+                id: mediaT
                 anchors.centerIn: parent
                 text: root.mediaText
                 visible: root.mediaText !== ""
@@ -724,20 +762,23 @@ ShellRoot {
                 // system group
                 RowLayout {
                     spacing: 14
-                    BarText { text: "ЦП " + root.cpu + "%" }
-                    BarText { text: "ОЗУ " + root.memUsed + "/" + root.memTotal + "ГБ" }
-                    BarText { text: "ТЕМП " + root.cpuTemp + "°"; visible: root.cpuTemp >= 0 }
-                    BarText { text: "ГП " + root.gpuTemp + "°"; visible: root.gpuTemp >= 0 }
+                    visible: panel.showStats
+                    BarText { id: cpuT; text: "ЦП " + root.cpu + "%" }
+                    BarText { id: memT; text: "ОЗУ " + root.memUsed + "/" + root.memTotal + "ГБ" }
+                    BarText { id: tempT; text: "ТЕМП " + root.cpuTemp + "°"; visible: root.cpuTemp >= 0 }
+                    BarText { id: gpuT; text: "ГП " + root.gpuTemp + "°"; visible: root.gpuTemp >= 0 }
                 }
 
                 // VPN (hidden when off)
                 BarText {
+                    id: vpnT
                     text: "ВПН"
                     visible: root.vpnOn
                 }
 
                 // screen recording indicator (start/stop with SUPER + R)
                 BarText {
+                    id: recT
                     text: "ЗАП"
                     color: root.cDanger
                     visible: root.rec
@@ -745,6 +786,7 @@ ShellRoot {
 
                 // notifications: hover for the history
                 BarText {
+                    id: uvdT
                     text: root.dnd ? "УВД --" : "УВД " + history.count
                     color: (root.dnd || history.count === 0) ? root.cMuted : root.cText
                     HoverArea {
@@ -759,6 +801,7 @@ ShellRoot {
 
                     // click: dashboard
                     BarText {
+                        id: dateT
                         text: root.dateStr
                         color: panel.open === "dash" ? root.cRust : root.cText
                         HoverArea {
@@ -769,6 +812,7 @@ ShellRoot {
 
                     // idle inhibitor: click to toggle
                     BarText {
+                        id: idleT
                         text: root.idleInhibit ? "БДИ" : "СОН"
                         color: root.idleInhibit ? root.cRust : root.cMuted
                         HoverArea {
@@ -778,6 +822,7 @@ ShellRoot {
 
                     // audio: click to mute
                     BarText {
+                        id: volT
                         text: root.volText
                         HoverArea {
                             onEntered: panel.hoverIn("control")
@@ -788,6 +833,8 @@ ShellRoot {
 
                     // microphone: click to mute
                     BarText {
+                        id: micT
+                        visible: panel.showMicNet
                         text: root.micText
                         HoverArea {
                             onEntered: panel.hoverIn("control")
@@ -798,6 +845,8 @@ ShellRoot {
 
                     // network: click for the control panel
                     BarText {
+                        id: netT
+                        visible: panel.showMicNet
                         text: root.netType === "wifi" ? "WI-FI" : (root.netType === "ethernet" ? "ЛАН" : "НЕТ СЕТИ")
                         color: panel.open === "control" ? root.cRust
                              : (root.netType === "none" ? root.cMuted : root.cText)
@@ -809,6 +858,7 @@ ShellRoot {
 
                     // battery (laptop only)
                     BarText {
+                        id: batT
                         visible: root.battery >= 0
                         text: "БАТ " + root.battery + "%" + (root.charging ? "+" : "")
                         color: (root.battery <= 15 && !root.charging) ? root.cDanger
@@ -821,6 +871,7 @@ ShellRoot {
 
                     // bluetooth (laptop only; separate file so a missing module can't break the bar)
                     Loader {
+                        id: btL
                         source: "bluetooth.qml"
                         visible: status === Loader.Ready && item.visible
                         onLoaded: {
@@ -832,6 +883,7 @@ ShellRoot {
 
                 // session menu
                 BarText {
+                    id: sessT
                     text: "ПИТ"
                     color: panel.open === "session" ? root.cWarn : root.cRust
                     HoverArea {
