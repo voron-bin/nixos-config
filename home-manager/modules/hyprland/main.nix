@@ -101,6 +101,13 @@ in
         { leaf = "fade"; enabled = true; speed = 4; bezier = "linear"; }
         { leaf = "workspaces"; enabled = true; speed = 3; bezier = "linear"; }
       ];
+	
+      # ignore maximize requests
+      window_rule = {         
+    	name = "suppress-maximize-events";
+    	match = { class = ".*"; };
+    	suppress_event = "maximize";
+      };
 
       # hl.config({ ... }) -- all regular options live here
       config = {
