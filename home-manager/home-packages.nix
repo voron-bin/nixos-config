@@ -91,7 +91,7 @@
 		# FILE MANAGEMENT & UTILITIES
 		# ============================================================
 		gvfs                  # Includes gphoto2, mtp, smb backends
-		pcmanfm
+		# nautilus
 		p7zip                 # Nix package name for 7zip
 		unzip
 		zip
