@@ -848,11 +848,11 @@ ShellRoot {
                         id: netT
                         visible: panel.showMicNet
                         text: root.netType === "wifi" ? "WI-FI" : (root.netType === "ethernet" ? "ЛАН" : "НЕТ СЕТИ")
-                        color: panel.open === "control" ? root.cRust
+                        color: panel.open === "net" ? root.cRust
                              : (root.netType === "none" ? root.cMuted : root.cText)
                         HoverArea {
-                            onEntered: panel.hoverIn("control")
-                            onExited: panel.hoverOut("control")
+                            onEntered: panel.hoverIn("net")
+                            onExited: panel.hoverOut("net")
                         }
                     }
 
@@ -877,6 +877,10 @@ ShellRoot {
                         onLoaded: {
                             item.fontFamily = root.fontFamily;
                             item.fontPixelSize = root.fontSize;
+                        }
+                        HoverArea {
+                            onEntered: panel.hoverIn("bluetooth")
+                            onExited: panel.hoverOut("bluetooth")
                         }
                     }
                 }
@@ -1231,7 +1235,7 @@ ShellRoot {
                 anchor.rect.x: panel.width - implicitWidth - 10
                 anchor.rect.y: panel.height
                 implicitWidth: 560
-                implicitHeight: 330
+                implicitHeight: 380
                 visible: panel.open === "control"
                 color: "transparent"
 
@@ -1286,6 +1290,16 @@ ShellRoot {
                                 label: "ПИТАНИЕ " + root.profile
                                 onActivated: root.ctl("profile")
                             }
+                            MenuBtn {
+                                Layout.fillWidth: true
+                                label: "СЕТИ ►"
+                                onActivated: panel.open = "net"
+                            }
+                            MenuBtn {
+                                Layout.fillWidth: true
+                                label: "BT СПИСОК ►"
+                                onActivated: panel.open = "bluetooth"
+                            }
                         }
 
                         Rectangle { Layout.fillWidth: true; height: 1; color: root.cBorder }
@@ -1304,6 +1318,68 @@ ShellRoot {
                         }
 
                         Item { Layout.fillHeight: true }
+                    }
+                }
+            }
+
+            // ---- Wi-Fi list (nmcli): hover the network label ----
+            PopupWindow {
+                id: netPopup
+                anchor.window: panel
+                anchor.rect.x: panel.width - implicitWidth - 10
+                anchor.rect.y: panel.height
+                implicitWidth: 520
+                implicitHeight: 420
+                visible: panel.open === "net"
+                color: "transparent"
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: root.cBase
+                    border.width: 1
+                    border.color: root.cBorder
+
+                    HoverHandler { onHoveredChanged: panel.popupHover(hovered) }
+
+                    Loader {
+                        anchors.fill: parent
+                        active: panel.open === "net"
+                        source: "netpanel.qml"
+                        onLoaded: {
+                            item.fontFamily = root.fontFamily;
+                            item.fontPixelSize = root.fontSize;
+                        }
+                    }
+                }
+            }
+
+            // ---- Bluetooth devices: hover the BT label (own file, needs the Bluetooth module) ----
+            PopupWindow {
+                id: btPopup
+                anchor.window: panel
+                anchor.rect.x: panel.width - implicitWidth - 10
+                anchor.rect.y: panel.height
+                implicitWidth: 520
+                implicitHeight: 420
+                visible: panel.open === "bluetooth"
+                color: "transparent"
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: root.cBase
+                    border.width: 1
+                    border.color: root.cBorder
+
+                    HoverHandler { onHoveredChanged: panel.popupHover(hovered) }
+
+                    Loader {
+                        anchors.fill: parent
+                        active: panel.open === "bluetooth"
+                        source: "btpanel.qml"
+                        onLoaded: {
+                            item.fontFamily = root.fontFamily;
+                            item.fontPixelSize = root.fontSize;
+                        }
                     }
                 }
             }
