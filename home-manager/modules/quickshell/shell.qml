@@ -1629,8 +1629,8 @@ ShellRoot {
                         }
                         MenuBtn {
                             Layout.fillWidth: true
-                            label: "СПЯЧКА"
-                            onActivated: { panel.open = ""; Quickshell.execDetached(["systemctl", "suspend"]); }
+                            label: "ГИБЕРНАЦИЯ"
+                            onActivated: { panel.open = ""; Quickshell.execDetached(["sh", "-c", "sleep 1; systemctl hibernate"]); }
                         }
                         MenuBtn {
                             Layout.fillWidth: true
