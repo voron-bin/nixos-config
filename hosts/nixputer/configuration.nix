@@ -17,5 +17,6 @@
 	system.stateVersion = stateVersion;
 
 	nixpkgs.config.allowUnfree = true;
-
+	
+	services.fwupd.enable = true;
 }
