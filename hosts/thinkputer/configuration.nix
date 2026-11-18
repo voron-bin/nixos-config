@@ -20,37 +20,30 @@
 
 	services.fwupd.enable = true;
 
-	services.throttled = {
-	
-	enable = true;
-		extraConfig = ''
-		    [GENERAL]
-		    Enabled: True
-		    Sysfs_Power_Path: /sys/class/power_supply/AC*/online
-		    Autoreload: True
+	services.throttled.enable = false;
 
-		    [BATTERY]
-		    Update_Rate_s: 30
-		    PL1_Tdp_W: 15
-		    PL1_Duration_s: 28
-		    PL2_Tdp_W: 25
-		    PL2_Duration_S: 0.002
-		    Trip_Temp_C: 85
-		    cTDP: 0
-		    Disable_BDPROCHOT: False
+	systemd.services.rapl-mmio-pl1 = {
+  
+		description = "Set MMIO package power limit (PL1) based on AC state";
+		serviceConfig.Type = "oneshot";
+			script = ''
+			f=/sys/class/powercap/intel-rapl-mmio:0/constraint_0_power_limit_uw
+			if [ "$(cat /sys/class/power_supply/AC*/online 2>/dev/null | head -n1)" = "1" ]; then
+				echo 25000000 > "$f"   # plugged in: 25 W
+			else
+				echo 15000000 > "$f"   # battery: 15 W
+			fi
 
-		    [AC]
-		    Update_Rate_s: 5
-		    PL1_Tdp_W: 25
-		    PL1_Duration_s: 28
-		    PL2_Tdp_W: 44
-		    PL2_Duration_S: 0.002
-		    Trip_Temp_C: 95
-		    HWP_Mode: False
-		    cTDP: 0
-		    Disable_BDPROCHOT: False
-		  '';
+			'';
 	};
+
+	systemd.timers.rapl-mmio-pl1 = {
+		wantedBy = [ "timers.target" ];
+		timerConfig = {
+		OnBootSec = "30s";
+		OnUnitActiveSec = "1min";
+		};
+	};	
 
 	services.thermald.enable = false;
 
