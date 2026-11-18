@@ -20,6 +20,8 @@
 
 	services.thermald.enable = true;
 
+	services.fwupd.enable = true;
+
 	services.upower.enable = true;
 
 	services.tlp = {
