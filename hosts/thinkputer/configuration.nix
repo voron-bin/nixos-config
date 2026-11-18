@@ -18,8 +18,6 @@
 
 	nixpkgs.config.allowUnfree = true;
 
-	services.thermald.enable = true;
-
 	services.fwupd.enable = true;
 
 	services.throttled = {
