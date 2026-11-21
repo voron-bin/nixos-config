@@ -49,6 +49,7 @@
 		wireplumber
 		alsa-utils            # Low-level ALSA tools
 		feishin
+		steam
 
 		# ============================================================
 		# TERMINAL & CLI TOOLS

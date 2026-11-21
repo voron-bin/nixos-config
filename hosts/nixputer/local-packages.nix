@@ -8,7 +8,7 @@
 
 	environment.systemPackages = with pkgs; [
 		# purely an option if I want a hostname to have different packages than is standard
-		steam
+		# steam
 		xf86-video-amdgpu
 		prismlauncher
 	];
